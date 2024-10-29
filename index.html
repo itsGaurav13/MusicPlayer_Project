@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="music-player">
+        <nav>
+          <div class="circle">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>
+          <div class="circle">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+        </nav>
+        <img src="468-thumbnail.png" class="song-image" />
+        <h1>Aa Bhi Jaa</h1>
+        <p>shaan</p>
+        <audio  id="song">//controls
+          <source src="Aa Bhi Jaa - Shaan 128 Kbps.mp3" type="audio/mpeg" />
+        </audio>
+        <input type="range" value="0" id="progress" />
+        <div class="controls">
+          <div><i class="fa-solid fa-backward-step"></i></div>
+          <div onclick="PlayPause()"><i class="fa-solid fa-play" id="ctrlIcons"></i></div>
+          <div><i class="fa-solid fa-forward-step"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let progress = document.querySelector("#progress");
+      let song = document.querySelector("#song");
+      let ctrlIcons = document.querySelector("#ctrlIcons");
+
+      song.onloadedmetadata = function () {
+        song.max = song.duration;
+        song.value = song.currentTime; 
+      };
+
+      function PlayPause(){
+        if(ctrlIcons.classList.contains("fa-pause")){
+            song.pause()
+            ctrlIcons.classList.add("fa-play")
+            ctrlIcons.classList.remove("fa-pause")
+
+
+        }else{
+            song.play()
+            ctrlIcons.classList.remove("fa-play")
+            ctrlIcons.classList.add("fa-pause")
+        }
+      }
+      if(song.play()){
+        setInterval(()=>{
+            progress.value= song.currentTime;
+
+        },500)
+
+
+      }
+      progress.onchange =function(){
+        song.play()
+        song.currentTime=progress.value
+        ctrlIcons.classList.add("fa-pause")
+        ctrlIcons.classList.remove("fa-play")
+      }
+    </script>
+  </body>
+</html>
